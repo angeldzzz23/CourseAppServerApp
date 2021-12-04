@@ -33,17 +33,15 @@ class NetworkManager {
         AF.request(endpoint, method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
-                print("here i am")
                 let jsonDecoder = JSONDecoder()
                 // get the userResponse
                 
                 if let userResponse = try? jsonDecoder.decode(Posts.self, from: data) {
                     completion(userResponse)
-                    print(userResponse)
                 }
                 break
-            case .failure(let failure):
-                print("here i am too")
+            case .failure(let error):
+                print(error.localizedDescription)
                 break
             }
         }
