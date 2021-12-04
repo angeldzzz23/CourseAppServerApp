@@ -37,9 +37,26 @@ class ViewController: UIViewController {
         title = "Message Board"
         view.backgroundColor = .white
         
-        createDummyData()
+        // gets all posts
+        // user
+        NetworkManager.getAllPosts { posts in
+            self.postData = posts
+            self.sortPostData()
+            self.shownPostData = posts
+            self.postTableView.reloadData()
+        }
+        
         setupViews()
         setupConstraints()
+        
+
+        
+      
+        
+        shownPostData = postData
+      
+        
+        
     }
     
     /// Order `postData` in order of newest to oldest.
@@ -211,19 +228,33 @@ class ViewController: UIViewController {
     
     @objc func refreshData() {
         // MARK: Use getAllPosts
+        
+        
+        
         /**
          We want to retrieve data from the server here upon refresh. Make sure to
          1) Sort the posts with `sortPostData`
          2) Update `postData` & `shownPostData` and reload `postTableView`
          3) End the refreshing on `refreshControl`
-         
+         ddd
          DO NOT USE `DispatchQueue.main.asyncAfter` as currently is - just use `getAllPosts`
          */
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.shownPostData = self.postData
+        
+        NetworkManager.getAllPosts { posts in
+            self.postData = posts
+            self.sortPostData()
+            self.shownPostData = posts
             self.postTableView.reloadData()
             self.refreshControl.endRefreshing()
         }
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            self.shownPostData = self.postData
+//            self.postTableView.reloadData()
+//            self.refreshControl.endRefreshing()
+//        }
+    
+    
     }
     
     @objc func prepareFilteringAction() {

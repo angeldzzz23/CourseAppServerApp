@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Alamofire
+
 
 
 class NetworkManager {
@@ -23,9 +25,28 @@ class NetworkManager {
      */
     
     /** Put the provided server endpoint here. If you don't know what this is, contact course staff. */
-    static let host = ""
+    static let host = "http://localhost:8080/"
     
-    static func getAllPosts(completion: Any) {
+    static func getAllPosts(completion: @escaping ([Post]) -> Void) {
+        let endpoint = "\(host)posts/"
+        
+        AF.request(endpoint, method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                print("here i am")
+                let jsonDecoder = JSONDecoder()
+                // get the userResponse
+                
+                if let userResponse = try? jsonDecoder.decode(Posts.self, from: data) {
+                    completion(userResponse)
+                    print(userResponse)
+                }
+                break
+            case .failure(let failure):
+                print("here i am too")
+                break
+            }
+        }
         
     }
     

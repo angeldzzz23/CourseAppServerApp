@@ -34,6 +34,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(bodyLabel)
         
         hashedPosterLabel.font = UIFont.systemFont(ofSize: 10)
+        hashedPosterLabel.numberOfLines = 0
         hashedPosterLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hashedPosterLabel)
         
