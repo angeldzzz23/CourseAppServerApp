@@ -46,14 +46,13 @@ class ViewController: UIViewController {
             self.postTableView.reloadData()
         }
         
+        
         setupViews()
         setupConstraints()
         
         shownPostData = postData
       
-        NetworkManager.createPost(title: "monster", body: "a nice energy drink!!!", poster: "m1chip") { post in
-            print(post)
-        }
+       
         
         
     }
@@ -128,8 +127,16 @@ class ViewController: UIViewController {
                 We want to create data onto the server here upon pressing `Create` with the appropriate title and body. Make sure to
                 1) Update `postData` & `shownPostData` and reload `postTableView`
                  
+                 
                  DO NOT CALL `getAllPosts`
                 */
+                NetworkManager.createPost(title:title, body: body, poster: poster) { post in
+                    self.postData.append(post)
+                    self.sortPostData()
+                    self.shownPostData = self.postData
+                    self.postTableView.reloadData()
+                }
+                
                 print("\(title) \(body) \(poster)")
             }
         }))

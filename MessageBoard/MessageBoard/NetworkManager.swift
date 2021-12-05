@@ -77,7 +77,6 @@ class NetworkManager {
     }
     
     
-gi
     static func createPost(title: String, body: String, poster: String, completion: @escaping (Post) -> Void) {
         let endpoint = "\(host)posts/"
         let paramaters: [String: Any] = [
@@ -116,7 +115,6 @@ gi
     static func deletePost(poster: String, completion: Any) {
         
     }
-    
     
     
     static func getPostersPosts(poster: String, completion: Any) {
