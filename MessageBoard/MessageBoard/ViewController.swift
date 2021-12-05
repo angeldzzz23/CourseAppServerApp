@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         shownPostData = postData
       
        
+      
         
         
     }
@@ -202,7 +203,29 @@ class ViewController: UIViewController {
                  
                  DO NOT CALL `getAllPosts`
                 */
-                print("\(indexPath) \(body) \(poster)")
+                
+                
+                
+                // calls the for the information
+                NetworkManager.updatePost(id: indexPath.row, body: body, poster: poster) { post in
+
+                    // pos is the position of the specific element
+                    if let pos = self.postData.firstIndex(where: {$0.hashedPoster == post.hashedPoster}) {
+                        print("the index is \(pos)")
+                        self.postData[pos] = post
+                    }
+                    
+                    self.refreshData()
+                    self.sortPostData()
+                    self.shownPostData = self.postData
+                    self.postTableView.reloadData()
+              
+                  
+                    
+                }
+               
+                
+                print("\(indexPath.row) \(body) \(poster)")
             }
         }))
         updateAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in

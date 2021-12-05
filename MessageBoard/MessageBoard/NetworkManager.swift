@@ -107,17 +107,40 @@ class NetworkManager {
     
     
     // TODO: Dec 5
-    static func updatePost(body: String, poster: String, completion: Any) {
+    static func updatePost(id: Int, body: String, poster: String, completion: @escaping (Post) -> Void) {
+        let endpoint = "\(host)posts/\(id)"
+        let parameters: [String: Any] = [
+            "body": body,
+            "poster": poster
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { response in
+            
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                // get the userResponse
+                if let userResponse = try? jsonDecoder.decode(Post.self, from: data) {
+                    completion(userResponse)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        
         
     }
+    
     
     // TODO: Dec 5
-    static func deletePost(poster: String, completion: Any) {
+    static func deletePost(id: Int, poster: String, completion: Any) {
         
     }
     
     
-    static func getPostersPosts(poster: String, completion: Any) {
+    // TODO: Dec
+    static func getPostersPosts(id: Int, poster: String, completion: Any) {
         
     }
     
