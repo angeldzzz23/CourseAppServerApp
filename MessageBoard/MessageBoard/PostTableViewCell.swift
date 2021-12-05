@@ -22,7 +22,6 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func setupViews() {
-        
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.systemFont(ofSize: 20)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -49,14 +49,11 @@ class ViewController: UIViewController {
         setupViews()
         setupConstraints()
         
-
-        NetworkManager.getSpecificPost(id: 1) { post in
-            print(post)
-        }
-      
-        
         shownPostData = postData
       
+        NetworkManager.createPost(title: "monster", body: "a nice energy drink!!!", poster: "m1chip") { post in
+            print(post)
+        }
         
         
     }
