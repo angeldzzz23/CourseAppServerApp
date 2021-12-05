@@ -50,7 +50,9 @@ class ViewController: UIViewController {
         setupConstraints()
         
 
-        
+        NetworkManager.getSpecificPost(id: 1) { post in
+            print(post)
+        }
       
         
         shownPostData = postData
@@ -248,12 +250,6 @@ class ViewController: UIViewController {
             self.refreshControl.endRefreshing()
         }
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            self.shownPostData = self.postData
-//            self.postTableView.reloadData()
-//            self.refreshControl.endRefreshing()
-//        }
-    
     
     }
     

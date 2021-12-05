@@ -48,10 +48,36 @@ class NetworkManager {
         
     }
     
-    static func getSpecificPost(id: Int, completion: Any) {
+    
+    
+    static func getSpecificPost(id: Int, completion: @escaping (Post) -> Void) {
+        let endpoint = "\(host)posts/\(id)"
+        
+        AF.request(endpoint, method: .get).validate().responseData { response in
+            
+            switch response.result {
+            case .success(let data):
+                // the decoder for the json
+                let jsonDecoder = JSONDecoder()
+                
+                if let userReponse = try? jsonDecoder.decode(Post.self, from: data) {
+                    completion(userReponse)
+                }
+                
+                print("here I am ")
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            }
+            
+        }
+        
         
     }
     
+    
+    // TODO:
     static func createPost(title: String, body: String, poster: String, completion: Any) {
         
     }
