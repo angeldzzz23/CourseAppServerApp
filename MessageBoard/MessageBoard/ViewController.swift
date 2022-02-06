@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         NetworkManager.getAllPosts { posts in
             self.postData = posts
             self.sortPostData()
-            self.shownPostData = posts
+            self.shownPostData = self.postData
             self.postTableView.reloadData()
         }
         
@@ -50,7 +50,9 @@ class ViewController: UIViewController {
         setupViews()
         setupConstraints()
         
-        shownPostData = postData
+        NetworkManager.deletePost(id: 2, poster: "String2") { post in
+            // nothing to do here
+        }
       
        
       
@@ -161,7 +163,15 @@ class ViewController: UIViewController {
                  
                  DO NOT CALL `getAllPosts`
                 */
-                print(integerID)
+                
+                
+                NetworkManager.getSpecificPost(id: integerID) { post in
+                    self.shownPostData.removeAll()
+                    self.shownPostData.append(post)
+                    self.postTableView.reloadData()
+                }
+                
+              
                 self.filterPostButton.title = "Cancel"
             } else if let unhashedPoster = self.filterAlert.textFields?[1].text?.trimmingCharacters(in: .whitespacesAndNewlines),
                unhashedPoster != "" { // NOTE this will not run unless you clear the ID textfield.
@@ -204,8 +214,6 @@ class ViewController: UIViewController {
                  DO NOT CALL `getAllPosts`
                 */
                 
-                
-                
                 // calls the for the information
                 NetworkManager.updatePost(id: indexPath.row, body: body, poster: poster) { post in
 
@@ -219,9 +227,7 @@ class ViewController: UIViewController {
                     self.sortPostData()
                     self.shownPostData = self.postData
                     self.postTableView.reloadData()
-              
-                  
-                    
+
                 }
                
                 
@@ -241,6 +247,18 @@ class ViewController: UIViewController {
                  
                  DO NOT CALL `getAllPosts`
                 */
+                
+                
+
+                
+                NetworkManager.deletePost(id: indexPath.row, poster: poster) { Post in
+                    // removes the post data where
+                    self.postData.removeAll(where: {$0.hashedPoster == poster})
+                    self.shownPostData.remove(at: indexPath.row)
+                    self.postTableView.reloadData()
+                }
+                
+                
                 print("\(indexPath) \(poster)")
             }
         }))

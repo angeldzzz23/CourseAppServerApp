@@ -114,7 +114,8 @@ class NetworkManager {
             "poster": poster
         ]
         
-        AF.request(endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { response in
+        
+        AF.request(endpoint, method: .put, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { response in
             
             switch response.result {
             case .success(let data):
@@ -133,8 +134,35 @@ class NetworkManager {
     }
     
     
-    // TODO: Dec 5
-    static func deletePost(id: Int, poster: String, completion: Any) {
+    // TODO:
+    // deleting a post
+    
+    static func deletePost(id: Int, poster: String, completion: @escaping (Post) -> Void) {
+        let endpoint = "\(host)posts/\(id)"
+        print(endpoint)
+        let parameters: [String: Any] = [
+            "poster" : poster,
+    
+        ]
+        
+        
+//        // deleting a post
+        AF.request(endpoint, method: .delete, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+
+            switch response.result {
+            case .success(let data):
+
+                let jsonDecoder = JSONDecoder()
+
+                // get the userResponse
+                if let userResponse = try? jsonDecoder.decode(Post.self, from: data) {
+                    completion(userResponse)
+                }
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
     }
     
