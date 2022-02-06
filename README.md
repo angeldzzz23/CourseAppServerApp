@@ -1,5 +1,5 @@
 # CourseAppServerApp
-Displaying a list of hashed post using alomfire and a remote server.
+Displaying a list of hashed post using alomfire and a remote server. This part of the https://ios-course.cornellappdev.com/chapters/7.-networking-ii-and-codable course.
 
 
 remote server Used (includes guide on how to use):
@@ -29,6 +29,6 @@ https://github.com/cuappdev/ios-course-messageboard
 
 
 
+**Additions/Bugs**
 
-
-Didnt do getPostersPosts to be able to complete the filtering functionality.
+Didnt get to finish getPostersPosts to be able to complete the filtering functionality.
